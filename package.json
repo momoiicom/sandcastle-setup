@@ -8,6 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
     "sandcastle": "pnpm exec tsx .sandcastle/main.mts",
     "sandcastle:rebuild": "docker rmi sandcastle:sandcastle-setup 2>/dev/null || true && docker build --build-arg AGENT_UID=$(id -u) --build-arg AGENT_GID=$(id -g) -t sandcastle:sandcastle-setup -f .sandcastle/Dockerfile . && pnpm exec tsx .sandcastle/main.mts"
   },
@@ -27,6 +29,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.8"
   }
 }

@@ -1,8 +1,14 @@
 # TASK
 
-Review the code changes on branch `{{BRANCH}}` and improve code clarity, consistency, and maintainability while preserving exact functionality.
+Review the code changes for issue {{TASK_ID}}: {{ISSUE_TITLE}}
+
+The branch is `{{BRANCH}}`. Find actionable issues only. Do not edit files. Do not make commits. Do not close the issue.
 
 # CONTEXT
+
+## Issue
+
+!`gh issue view {{TASK_ID}} --json number,title,body,comments,labels --jq '{number, title, body, labels: [.labels[].name], comments: [.comments[].body]}'`
 
 ## Branch diff
 
@@ -16,7 +22,7 @@ Review the code changes on branch `{{BRANCH}}` and improve code clarity, consist
 
 1. **Understand the change**: Read the diff and commits above to understand the intent.
 
-2. **Analyze for improvements**: Look for opportunities to:
+2. **Analyze for actionable improvements**: Look for issues that should block merge:
    - Reduce unnecessary complexity and nesting
    - Eliminate redundant code and abstractions
    - Improve readability through clear variable and function names
@@ -40,16 +46,19 @@ Review the code changes on branch `{{BRANCH}}` and improve code clarity, consist
 
 5. **Apply project standards**: Follow the coding standards defined in @.sandcastle/CODING_STANDARDS.md
 
-6. **Preserve functionality**: Never change what the code does - only how it does it. All original features, outputs, and behaviors must remain intact.
+6. **Preserve functionality**: Flag any finding that would change what the code does. All original features, outputs, and behaviors must remain intact.
 
-# EXECUTION
+7. **Preserve issue completion**: Flag any finding that removes or weakens behavior required by the issue.
 
-If you find improvements to make:
+# OUTPUT
 
-1. Make the changes directly on this branch
-2. Run tests and type checking to ensure nothing is broken
-3. Commit describing the refinements
+If there are actionable findings, list them with:
 
-If the code is already clean and well-structured, do nothing.
+- Severity
+- File or area
+- What is wrong
+- What the implementer should change
 
-Once complete, output <promise>COMPLETE</promise>.
+If there are no actionable findings, output exactly:
+
+<review>NO_ACTIONABLE_FINDINGS</review>

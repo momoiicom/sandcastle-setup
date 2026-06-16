@@ -4,11 +4,11 @@ Here are the open issues in the repo:
 
 <issues-json>
 
-!`gh issue list --state open --label Sandcastle --limit 100 --json number,title,body,labels,comments --jq '[.[] | {number, title, body, labels: [.labels[].name], comments: [.comments[].body]}]'`
+!`gh issue list --state open --label ready-for-agent --limit 100 --json number,title,body,labels,comments --jq '[.[] | {number, title, body, labels: [.labels[].name], comments: [.comments[].body]} | select((.labels | index("in-progress")) | not)]'`
 
 </issues-json>
 
-The list above has already been filtered to issues ready for work.
+The list above has already been filtered to issues ready for work. Only issues tagged `ready-for-agent` are included. Issues tagged `in-progress` are excluded because another Sandcastle run has already started work on them.
 
 # TASK
 

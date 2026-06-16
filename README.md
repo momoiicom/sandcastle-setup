@@ -26,7 +26,7 @@ After the first build, use `pnpm sandcastle` for subsequent runs.
 
 | Command | What it does |
 |---|---|
-| `pnpm sandcastle` | Run the plan → implement → review → merge loop |
+| `pnpm sandcastle` | Run the plan → implement → check → review → merge loop |
 | `pnpm sandcastle:rebuild` | Rebuild the Docker image (after Dockerfile changes) and run |
 
 Logs are written to `.sandcastle/logs/`.
@@ -35,9 +35,10 @@ Logs are written to `.sandcastle/logs/`.
 
 Sandcastle runs a multi-phase loop defined in `.sandcastle/main.mts`:
 
-1. **Plan** — reads GitHub issues, picks unblocked work, outputs a JSON plan
-2. **Execute + Review** — one Docker sandbox per issue; implementer then reviewer on the same branch
-3. **Merge** — merges completed branches back to `main`
+1. **Plan** — reads GitHub issues tagged `ready-for-agent`, picks unblocked work, outputs a JSON plan
+2. **Execute + Check** — one Docker sandbox per issue; marks the issue `in-progress`, implements, and verifies completion
+3. **Review** — reviews completed branches on the same branch
+4. **Merge** — merges completed branches back to `main` and removes the `in-progress` label
 
 Agents run inside Docker containers. The host worktree is bind-mounted at `/home/agent/workspace`.
 
@@ -49,6 +50,7 @@ Agents run inside Docker containers. The host worktree is bind-mounted at `/home
 | `.sandcastle/Dockerfile` | Sandbox image: Node 22, pnpm, Codex CLI, gh, git |
 | `.sandcastle/plan-prompt.md` | Planner agent instructions |
 | `.sandcastle/implement-prompt.md` | Implementer agent instructions |
+| `.sandcastle/completion-check-prompt.md` | Read-only completion checker instructions |
 | `.sandcastle/review-prompt.md` | Reviewer agent instructions |
 | `.sandcastle/merge-prompt.md` | Merger agent instructions |
 | `.sandcastle/CODING_STANDARDS.md` | Project coding standards (loaded by reviewer) |

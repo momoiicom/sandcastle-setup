@@ -8,6 +8,14 @@ Only work on the issue specified.
 
 Work on branch {{BRANCH}}. Make commits and run tests.
 
+This is implementation attempt {{ATTEMPT}} of {{MAX_ATTEMPTS}}.
+
+# COMPLETION CHECK FEEDBACK
+
+{{COMPLETION_FEEDBACK}}
+
+Use the feedback above to focus this pass. If this is a follow-up attempt, fix the missing work before doing any refactoring.
+
 # CONTEXT
 
 Here are the last 10 commits:
