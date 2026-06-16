@@ -24,6 +24,10 @@ Explore the repo and fill your context window with relevant information that wil
 
 Pay extra attention to test files that touch the relevant parts of the code.
 
+# STANDARDS
+
+Follow the coding standards defined in @.sandcastle/CODING_STANDARDS.md — layer boundaries, naming, testing rules, and hard prohibitions apply to all new code.
+
 # EXECUTION
 
 If applicable, use RGR to complete the task.
