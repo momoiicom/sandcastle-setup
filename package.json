@@ -2,18 +2,24 @@
   "name": "sandcastle-setup",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@11.7.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sandcastle": "pnpm exec tsx .sandcastle/main.mts",
+    "sandcastle:rebuild": "docker rmi sandcastle:sandcastle-setup 2>/dev/null || true && docker build --build-arg AGENT_UID=$(id -u) --build-arg AGENT_GID=$(id -g) -t sandcastle:sandcastle-setup -f .sandcastle/Dockerfile . && pnpm exec tsx .sandcastle/main.mts"
   },
   "dependencies": {
     "next": "16.2.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "tsx": "^4.22.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@ai-hero/sandcastle": "^0.8.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
