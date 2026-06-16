@@ -49,7 +49,7 @@ const hooks = {
   sandbox: { onSandboxReady: [{ command: "pnpm install" }] },
 };
 
-const sandbox = docker({
+const sandboxProvider = docker({
   env: {
     CI: "true",
     COREPACK_ENABLE_DOWNLOAD_PROMPT: "0",
@@ -83,7 +83,7 @@ for (let iteration = 1; iteration <= MAX_ITERATIONS; iteration++) {
   // -------------------------------------------------------------------------
   const plan = await sandcastle.run({
     hooks,
-    sandbox: sandbox,
+    sandbox: sandboxProvider,
     name: "planner",
     // One iteration is enough: the planner just needs to read and reason,
     // not write code. (Structured output requires maxIterations: 1.)
@@ -126,7 +126,7 @@ for (let iteration = 1; iteration <= MAX_ITERATIONS; iteration++) {
     issues.map(async (issue) => {
       const sandbox = await sandcastle.createSandbox({
         branch: issue.branch,
-        sandbox: sandbox,
+        sandbox: sandboxProvider,
         hooks,
         copyToWorktree,
       });
@@ -219,7 +219,7 @@ for (let iteration = 1; iteration <= MAX_ITERATIONS; iteration++) {
   // -------------------------------------------------------------------------
   await sandcastle.run({
     hooks,
-    sandbox: sandbox,
+    sandbox: sandboxProvider,
     name: "merger",
     maxIterations: 1,
     agent: sandcastle.codex("gpt-5.5", { effort: "xhigh" }),
